@@ -21,3 +21,7 @@ This repository contains the code of the [Angular Testing Course](https://angula
 [npm karma](https://www.npmjs.com/package/karma)
 
 [jasmine fail()](https://jasmine.github.io/api/edge/global.html#fail)
+
+[jasmine expect()](https://jasmine.github.io/api/edge/global.html#expect)
+
+[jasmine matchers](https://jasmine.github.io/api/edge/matchers.html)
