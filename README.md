@@ -25,3 +25,13 @@ This repository contains the code of the [Angular Testing Course](https://angula
 [jasmine expect()](https://jasmine.github.io/api/edge/global.html#expect)
 
 [jasmine matchers](https://jasmine.github.io/api/edge/matchers.html)
+
+[jasmine spies](https://medium.com/@ambily_francis/unlocking-the-power-of-jasmine-spies-a-comprehensive-guide-to-effective-unit-testing-in-typescript-6556df0c1fc8)
+
+[jasmine class Spy](https://jasmine.github.io/api/edge/Spy.html)
+
+[jasmine spyOn()](https://jasmine.github.io/api/edge/global.html#spyOn)
+
+[unit test](https://aws.amazon.com/it/what-is/unit-testing/)
+
+[jasmine.createSpyObj()](https://jasmine.github.io/api/edge/jasmine.html#.createSpyObj)
