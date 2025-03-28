@@ -1,30 +1,38 @@
 import { CalculatorService } from "./calculator.service";
 import { LoggerService } from "./logger.service";
 
-// quello implementato qui è uno unit test, cioè viene testa una singola unità dell'app, isolandola dal resto
-// quindi se uno di questi test fallisce il problema è solo all'interno della singola unità, in questo caso nel CalculatorService
 describe("CalculatorService", () => {
+  // dichiaro le properties che mi servono per le specs
+  // poi le valorizzo nella callback del beforeEach()
+  let calculator: CalculatorService, loggerSpy: any;
+
+  // utilizzo della funzione di jasmine beforeEach() per non ripetere il codice nelle specs
+  // Run some shared setup before each of the specs in the describe in which it is called.
+  // la funzione viene chiamata prima di ogni spec (2 specs viene chiamata 2 volte)
+  // il primo parametro che accetta è una callback
+  beforeEach(() => {
+    // const logger = jasmine.createSpyObj("LoggerService", ["log"]);
+
+    // const calculator = new CalculatorService(logger);
+
+    console.log("Before each....");
+
+    // valorizzo le properties che ho creato
+    loggerSpy = jasmine.createSpyObj("LoggerService", ["log"]);
+
+    calculator = new CalculatorService(loggerSpy);
+  });
+
   it("should add two numbers", () => {
-    // il metodo .add() chiama al suo interno un altro servive
-    // vogliamo per esempio vedere quante volte viene chiamato questo service durante l'esecuzione del metodo, ad esempio perchè so che è un service che consuma molta memoria e voglio monitorarlo
-    // per fare questo utilizzo le spies di jasmine
-    // salvo l'istanza del LoggerService in una const
-    // const calculator = new CalculatorService(new LoggerService());
-    // in questo modo stiamo pèassando una vera istanza del LoggerService al CalculatorService che testiamo
-    // const logger = new LoggerService();
+    console.log("Add numbers..");
 
-    // potremmo passare una fake istance del LoggerService creandola con jasmine tramite metodo statico createSpyObj()
-    // il primo argomento è il nome dell'oggetto che creo ed l secondo un array con i metodi che questo oggetto deve contenere
-    // creo un oggetto che si chiama LoggerService ed ha un metodo chiamato log e lo passo al costrutore del CalculatorService
-    // creando uno spyObj non ho bisogno del metodo spyOn
-    const logger = jasmine.createSpyObj("LoggerService", ["log"]);
-    // voglio "spiare" questo oggetto logger
-    // lo faccio col metodo spyOn() che accetta 2 parametri: l'oggetto da spiare e la lista dei metodi che vogliamo spiare
-    // l'oggetto logger ha un solo metodo che si chiama log, questo metodo (se non lo definiamo noi) non ritorna niente
-    // spyOn(logger, "log");
+    // sposto questo codice nella callback del beforeEach()
+    // const logger = jasmine.createSpyObj("LoggerService", ["log"]);
 
-    const calculator = new CalculatorService(logger);
+    // const calculator = new CalculatorService(logger);
 
+    // le proprietà definite nello scope della callback del beforeEach() non sono visibili nello scope delle specs
+    // per poterle utilizzare devo dichiarare le property prima del beforeEach() e poi in questo valorizzarle
     const result = calculator.add(2, 2);
 
     expect(result).toBe(
@@ -32,18 +40,30 @@ describe("CalculatorService", () => {
       "posso aggiungere un messaggio in caso di fail del test"
     );
 
-    // il metodo log dell'oggetto logger lo utilizziamo per le nostre asserzioni
-    // utilizzo il matcher toHaveBeenCalledTimes() ed indico quante volte mi aspetto che il metoso venga chiamato
-    expect(logger.log).toHaveBeenCalledTimes(1);
+    // utilizzo la property generale loggerSpy
+    // expect(logger.log).toHaveBeenCalledTimes(1);
+    expect(loggerSpy.log).toHaveBeenCalledTimes(1);
   });
 
   it("should subtract two numbers", () => {
-    const calculator = new CalculatorService(new LoggerService());
+    console.log("Subtract numbers...");
+
+    // const calculator = new CalculatorService(new LoggerService());
+
+    // passo un mock del LoggerService al CalculatorService
+    // in questo modo ho lo stesso codice ripetuto per le 2 specs
+    // va evitata la ripetizione dello stesso codice
+    // per farlo prima delle specs si utilizza la funzione beforeEach() di jasmine
+    // sposto questo codice nella callback del beforeEach()
+    // const logger = jasmine.createSpyObj("LoggerService", ["log"]);
+
+    // const calculator = new CalculatorService(logger);
 
     const result = calculator.subtract(2, 2);
 
     expect(result).toBe(0);
     expect(result).toBeLessThan(1);
     expect(result).not.toBe(1);
+    expect(loggerSpy.log).toHaveBeenCalledTimes(1);
   });
 });

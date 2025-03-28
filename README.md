@@ -6,6 +6,10 @@ This repository contains the code of the [Angular Testing Course](https://angula
 
 ## Start web server npm run start
 
+[Angular testing in general](https://medium.com/@AlessandroSantamaro/test-automatici-in-angular-d3bbfd8d274b)
+
+[Angular Testing](https://angular.dev/guide/testing)
+
 [npm ci and npm i](https://stackoverflow.com/a/53325242)
 
 [jasmine](https://jasmine.github.io/)
@@ -35,3 +39,5 @@ This repository contains the code of the [Angular Testing Course](https://angula
 [unit test](https://aws.amazon.com/it/what-is/unit-testing/)
 
 [jasmine.createSpyObj()](https://jasmine.github.io/api/edge/jasmine.html#.createSpyObj)
+
+[jasmine beforeEach()](https://jasmine.github.io/api/edge/global.html#beforeEach)
