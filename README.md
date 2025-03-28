@@ -53,3 +53,5 @@ This repository contains the code of the [Angular Testing Course](https://angula
 [ng oggetto configurazione TestBed.configureTestingModule()](https://angular.dev/api/core/testing/TestModuleMetadata)
 
 [ng TestBed.inject() from @angular/core/testing](https://angular.dev/api/core/testing/inject)
+
+[jasmine xdescribe vs fdescribe](https://stackoverflow.com/questions/48740288/xdescribe-vs-fdescribe-in-jasmine)

@@ -1,40 +1,39 @@
 import { CalculatorService } from "./calculator.service";
 import { LoggerService } from "./logger.service";
-// ho importato a mano la classe TestBed perchè non me la vedeva
 import { TestBed } from "@angular/core/testing";
 
+// una x prima del subscribe non fa eseguire i test della suite
+// xdescribe("CalculatorService", () => {
+// una f prima dà il focus alla suite e verrà eseguita solo questa se ce ne sono altre
+// fdescribe("CalculatorService", () => {
 describe("CalculatorService", () => {
-  // la classe TestBed di Angular ci aiuta nel creare ambienti per lo Unit Testing
-  // questa classe è nel modulo @angular/core/testing
-  // mette a disposizione metodi per creare componenti e services in unit tests
-  // metodo configureTestingModule({TestModuleMetadata})
-  // accetta un oggetto con le proprietà di configurazione
-
   let calculator: CalculatorService, loggerSpy: any;
 
+  // quello che c'è nel beforeEach() viene eseguita ogni volta prima di una spec perchè per eseguire uno Unit Test ogni spec deve essere isolata completamente dall'altra, quindi per ognuna una istanza nuova
   beforeEach(() => {
     console.log("Before each....");
 
     loggerSpy = jasmine.createSpyObj("LoggerService", ["log"]);
 
-    // utilizzo il metodo .configureTestingModule()
-    // voglio fornire a questa suite alcune dependencies in modo da poterle iniettare nelle specs
+    // in questo modo stiamo utilizzando il CalculatorService come istanza reale del service CalculatorService, invece per il LoggerService ne creiamo una mock, fittizia tramite spies di jasmine
+    // questo perchè il test che stiamo implemetando è uno Unit Test, cioè un test per una singola unità del codice, in questo caso a noi interessa testare il CalculatorService, se i suoi metodi fanno quello che ci aspettiamo debbano fare
+    // quindi isolo il CalculatorService dalle sue dipendenze esterne, non mi interessa cosa fa l'altro service
+    // in caso volessi testare più unità insieme, si parla di Integration Test
+    // se passassi una reale istanza del LoggerService starei eseguendo un Integration Test
     TestBed.configureTestingModule({
       providers: [
-        // dico che voglio che sia disponibile qui il CalculatorService
         CalculatorService,
-        // inoltre non voglio utilizzare un LoggerService vero ma il mock che ho creato io
-        // quindi devo dire di fornire una certa dipendenza indicandola tramite injectToken, cioè un valore unico che identifica la dependency da iniettare e che cosa è da iniettare, in questo caso il mock loggerSpy
         { provide: LoggerService, useValue: loggerSpy },
       ],
     });
-    // calculator = new CalculatorService(loggerSpy);
-    // quindi ora creo un'istanza reale del CalculatorService che riceverà un mock del LoggerService (perchè le dipendenze che vengono iniettate qui nel file .spec.ts le ho definite nella proprietà providers del metodo .configureTestingModule() della classe TestBed)
-    // lo faccio utilizzando il metodo statico .inject() della classe TestBed
-    // .inject() Allows injecting dependencies in beforeEach() and it(). Note: this function (imported from the @angular/core/testing package) can only be used to inject dependencies in tests. To inject dependencies in your application code, use the inject function from the @angular/core package instead.
+
     calculator = TestBed.inject(CalculatorService);
   });
 
+  // una x prima dell'it() disabilita la singola spec
+  // xit("should add two numbers", () => {
+  // una f prima dell'it() dà il focus alla singola spec, verrà eseguita solo questa
+  // fit("should add two numbers", () => {
   it("should add two numbers", () => {
     console.log("Add numbers..");
 
