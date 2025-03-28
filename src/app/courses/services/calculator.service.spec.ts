@@ -1,38 +1,43 @@
 import { CalculatorService } from "./calculator.service";
 import { LoggerService } from "./logger.service";
+// ho importato a mano la classe TestBed perchè non me la vedeva
+import { TestBed } from "@angular/core/testing";
 
 describe("CalculatorService", () => {
-  // dichiaro le properties che mi servono per le specs
-  // poi le valorizzo nella callback del beforeEach()
+  // la classe TestBed di Angular ci aiuta nel creare ambienti per lo Unit Testing
+  // questa classe è nel modulo @angular/core/testing
+  // mette a disposizione metodi per creare componenti e services in unit tests
+  // metodo configureTestingModule({TestModuleMetadata})
+  // accetta un oggetto con le proprietà di configurazione
+
   let calculator: CalculatorService, loggerSpy: any;
 
-  // utilizzo della funzione di jasmine beforeEach() per non ripetere il codice nelle specs
-  // Run some shared setup before each of the specs in the describe in which it is called.
-  // la funzione viene chiamata prima di ogni spec (2 specs viene chiamata 2 volte)
-  // il primo parametro che accetta è una callback
   beforeEach(() => {
-    // const logger = jasmine.createSpyObj("LoggerService", ["log"]);
-
-    // const calculator = new CalculatorService(logger);
-
     console.log("Before each....");
 
-    // valorizzo le properties che ho creato
     loggerSpy = jasmine.createSpyObj("LoggerService", ["log"]);
 
-    calculator = new CalculatorService(loggerSpy);
+    // utilizzo il metodo .configureTestingModule()
+    // voglio fornire a questa suite alcune dependencies in modo da poterle iniettare nelle specs
+    TestBed.configureTestingModule({
+      providers: [
+        // dico che voglio che sia disponibile qui il CalculatorService
+        CalculatorService,
+        // inoltre non voglio utilizzare un LoggerService vero ma il mock che ho creato io
+        // quindi devo dire di fornire una certa dipendenza indicandola tramite injectToken, cioè un valore unico che identifica la dependency da iniettare e che cosa è da iniettare, in questo caso il mock loggerSpy
+        { provide: LoggerService, useValue: loggerSpy },
+      ],
+    });
+    // calculator = new CalculatorService(loggerSpy);
+    // quindi ora creo un'istanza reale del CalculatorService che riceverà un mock del LoggerService (perchè le dipendenze che vengono iniettate qui nel file .spec.ts le ho definite nella proprietà providers del metodo .configureTestingModule() della classe TestBed)
+    // lo faccio utilizzando il metodo statico .inject() della classe TestBed
+    // .inject() Allows injecting dependencies in beforeEach() and it(). Note: this function (imported from the @angular/core/testing package) can only be used to inject dependencies in tests. To inject dependencies in your application code, use the inject function from the @angular/core package instead.
+    calculator = TestBed.inject(CalculatorService);
   });
 
   it("should add two numbers", () => {
     console.log("Add numbers..");
 
-    // sposto questo codice nella callback del beforeEach()
-    // const logger = jasmine.createSpyObj("LoggerService", ["log"]);
-
-    // const calculator = new CalculatorService(logger);
-
-    // le proprietà definite nello scope della callback del beforeEach() non sono visibili nello scope delle specs
-    // per poterle utilizzare devo dichiarare le property prima del beforeEach() e poi in questo valorizzarle
     const result = calculator.add(2, 2);
 
     expect(result).toBe(
@@ -40,24 +45,11 @@ describe("CalculatorService", () => {
       "posso aggiungere un messaggio in caso di fail del test"
     );
 
-    // utilizzo la property generale loggerSpy
-    // expect(logger.log).toHaveBeenCalledTimes(1);
     expect(loggerSpy.log).toHaveBeenCalledTimes(1);
   });
 
   it("should subtract two numbers", () => {
     console.log("Subtract numbers...");
-
-    // const calculator = new CalculatorService(new LoggerService());
-
-    // passo un mock del LoggerService al CalculatorService
-    // in questo modo ho lo stesso codice ripetuto per le 2 specs
-    // va evitata la ripetizione dello stesso codice
-    // per farlo prima delle specs si utilizza la funzione beforeEach() di jasmine
-    // sposto questo codice nella callback del beforeEach()
-    // const logger = jasmine.createSpyObj("LoggerService", ["log"]);
-
-    // const calculator = new CalculatorService(logger);
 
     const result = calculator.subtract(2, 2);
 

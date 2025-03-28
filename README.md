@@ -30,6 +30,8 @@ This repository contains the code of the [Angular Testing Course](https://angula
 
 [jasmine matchers](https://jasmine.github.io/api/edge/matchers.html)
 
+[jasmine class](https://jasmine.github.io/api/edge/jasmine.html)
+
 [jasmine spies](https://medium.com/@ambily_francis/unlocking-the-power-of-jasmine-spies-a-comprehensive-guide-to-effective-unit-testing-in-typescript-6556df0c1fc8)
 
 [jasmine class Spy](https://jasmine.github.io/api/edge/Spy.html)
@@ -41,3 +43,13 @@ This repository contains the code of the [Angular Testing Course](https://angula
 [jasmine.createSpyObj()](https://jasmine.github.io/api/edge/jasmine.html#.createSpyObj)
 
 [jasmine beforeEach()](https://jasmine.github.io/api/edge/global.html#beforeEach)
+
+[dependency injection DI](https://angular.dev/guide/di)
+
+[ng TestBed](https://angular.dev/api/core/testing/TestBed)
+
+[ng TestBed.configureTestingModule()](https://angular.dev/api/core/testing/TestBedStatic#configureTestingModule)
+
+[ng oggetto configurazione TestBed.configureTestingModule()](https://angular.dev/api/core/testing/TestModuleMetadata)
+
+[ng TestBed.inject() from @angular/core/testing](https://angular.dev/api/core/testing/inject)
